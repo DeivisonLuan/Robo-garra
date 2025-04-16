@@ -83,7 +83,7 @@
       "id": "lcd2",
       "top": 44.8,
       "left": 34.4,
-      "attrs": { "pins": "i2c" }
+      "attrs": { "background": "blue", "color": "white","pins": "i2c" }
     }
   ],
   "connections": [
