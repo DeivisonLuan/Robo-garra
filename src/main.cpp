@@ -20,7 +20,7 @@ volatile unsigned long timestamp_last_interrupt_p3 = 0;
 
 volatile bool ToP1 = false;
 volatile bool ToP2 = false;
-volatile bool Top3 = false;
+volatile bool ToP3 = false;
 
 void IRAM_ATTR button_p1();
 void IRAM_ATTR button_p2();
@@ -35,7 +35,7 @@ void Go_to_P2(byte lastPosit);
 void Go_to_P3(byte lastPosit);
 void start_screen();
 void headline();
-void Robot(byte posit, bool clawState);
+void Draw_Robot(byte posit, bool clawState);
 void initial_screen();
 
 void setup() {
@@ -59,6 +59,7 @@ void setup() {
   LCD.backlight();
   start_screen();
   initial_screen();
+  digitalWrite(LedG,HIGH);
 }
 
 void loop() {
@@ -68,7 +69,7 @@ void loop() {
   else if(ToP2){
     Go_to_P2(lastPosition);
   }
-  else if(Top3){
+  else if(ToP3){
     Go_to_P3(lastPosition);
   }
   else{
@@ -92,7 +93,7 @@ void IRAM_ATTR button_p2(){
 }
 void IRAM_ATTR button_p3(){
   if (micros() - timestamp_last_interrupt_p3 > DebounceTime) {
-    Top3 = true;
+    ToP3 = true;
     timestamp_last_interrupt_p3 = micros();
   }
 }
@@ -117,80 +118,156 @@ void headline(){
   LCD.print("_P3_");
 }
 
-void Robot(byte posit, bool clawState){
-  switch (posit){
-    case 1:
-      LCD.setCursor(1, 1);
-      LCD.print("|__|");
-      LCD.setCursor(2,2);
-      LCD.print("|");
-      LCD.setCursor(2,3);
-      if(clawState) LCD.print("^");
-      else LCD.print("<>");
-      break;
-    case 2:
-      LCD.setCursor(8, 1);
-      LCD.print("|__|");
-      LCD.setCursor(9,2);
-      LCD.print("|");
-      LCD.setCursor(9,3);
-      LCD.print("^");
-      if(clawState) LCD.print("^");
-      else LCD.print("<>");
-      break;
-    case 3:
-      LCD.setCursor(15, 1);
-      LCD.print("|__|");
-      LCD.setCursor(16,2);
-      LCD.print("|");
-      LCD.setCursor(16,3);
-      LCD.print("^");
-      if(clawState) LCD.print("^");
-      else LCD.print("<>");
-      break;
-    default:
-      LCD.setCursor(2, 1);
-      LCD.print("Erro no gerador!");
-      break;
-    }
+//desenha o robo no lcd na posição determinada e com a garra aberta(true) ou fechada(false)
+void Draw_Robot(byte posit, bool clawState){
+    LCD.setCursor(posit, 1);
+    LCD.print("|__|");
+    LCD.setCursor((posit+1),2);
+    LCD.print("|");
+    LCD.setCursor((posit+1),3);
+    if(clawState){LCD.print("^ ");} 
+    else{LCD.print("<>");}
 }
 //Tela que mostra a disposição inicial do sistema
 void initial_screen(){
   headline();
   
+  //define qual a posição que o carro começa aleatoriamente
   byte InitialPosition = random(1,4);
-  Serial.println(InitialPosition);
 
-  Robot(InitialPosition, true);
-
+  //converte a posição inicial na posição do cursor no lcd para o carro
+  switch (InitialPosition){
+    case 1:
+      InitialPosition = 1;
+      break;
+    case 2:
+      InitialPosition = 8;
+    break;
+    case 3:
+      InitialPosition = 15;
+    break;
+    default:
+      break;
+  }
+  
+  //desenha o carro na posição inicial
   lastPosition = InitialPosition;
+  Draw_Robot(lastPosition, true);
 }
 
 void Go_to_P1(byte lastPosit){
-  LCD.clear();
-  headline();
-  Robot(lastPosit,false);
-  lastPosition = 1;
+  digitalWrite(LedG,LOW); //indica que recebeu o comando
+
+  //fechamento da garra
+  digitalWrite(LedR,HIGH);
+  Draw_Robot(lastPosit,false);
+  delay(500);
+  digitalWrite(LedR,LOW);
+
+  //movimento do carro
+  digitalWrite(LedB,HIGH);
+  lastPosit = 1;
+  for(byte i=lastPosition;i>=lastPosit;i--){
+    LCD.clear();
+    headline();
+    Draw_Robot(i,false);
+    delay(300);
+  }
+  delay(500);
+  digitalWrite(LedB,LOW);
+
+  //abertura da garra
+  digitalWrite(LedR,HIGH);
+  Draw_Robot(lastPosit,true);
+  delay(100);
+  digitalWrite(LedR,LOW);
+  digitalWrite(LedG,HIGH);
+  lastPosition = lastPosit;
   ToP1 = false;
 }
 
 void Go_to_P2(byte lastPosit){
-  LCD.clear();
-  headline();
-  Robot(lastPosit,false);
-  lastPosition = 2;
+  digitalWrite(LedG,LOW); //indica que recebeu o comando
+
+  //fechamento da garra
+  digitalWrite(LedR,HIGH);
+  Draw_Robot(lastPosit,false);
+  delay(500);
+  digitalWrite(LedR,LOW);
+
+  //movimento do carro
+  digitalWrite(LedB,HIGH);
+  lastPosit = 8;
+  if(lastPosition>lastPosit){
+    for(byte i=lastPosition;i>=lastPosit;i--){
+    LCD.clear();
+    headline();
+    Draw_Robot(i,false);
+    delay(300);
+    }
+  }
+  else if(lastPosition<lastPosit){
+    for(byte i=lastPosition;i<=lastPosit;i++){
+    LCD.clear();
+    headline();
+    Draw_Robot(i,false);
+    delay(300);
+    }
+  }
+  delay(500);
+  digitalWrite(LedB,LOW);
+
+  //abertura da garra
+  digitalWrite(LedR,HIGH);
+  Draw_Robot(lastPosit,true);
+  delay(100);
+  digitalWrite(LedR,LOW);
+  digitalWrite(LedG,HIGH);
+  lastPosition = lastPosit;
   ToP2 = false;
 }
 
-void Go_to_P3(byte lastPosit){
-  LCD.clear();
-  headline();
-  Robot(lastPosit,false);
-  lastPosition = 3;
-  Top3 = false;
+void Go_to_P3(byte lastPosit){ 
+  digitalWrite(LedG,LOW); //indica que recebeu o comando
+
+  //fechamento da garra
+  digitalWrite(LedR,HIGH);
+  Draw_Robot(lastPosit,false);
+  delay(500);
+  digitalWrite(LedR,LOW);
+
+  //movimento do carro
+  digitalWrite(LedB,HIGH);
+  lastPosit = 15;
+  for(byte i=lastPosition;i<=lastPosit;i++){
+    LCD.clear();
+    headline();
+    Draw_Robot(i,false);
+    delay(300);
+  }
+  delay(500);
+  digitalWrite(LedB,LOW);
+
+  //abertura da garra
+  digitalWrite(LedR,HIGH);
+  Draw_Robot(lastPosit,true);
+  delay(100);
+  digitalWrite(LedR,LOW);
+  digitalWrite(LedG,HIGH);
+  lastPosition = lastPosit;
+  ToP3 = false;
 }
 
 
-//separar as funções em .h, observar o comportamento aleatorio do robo quando os botões estão sendo pressionados
-//duplicação da garra em alguns momentos
-//adicionar animações do carrinho andando de uma posição para a outra
+/*
+
+#Separar as funções em .h
+
+# Em hipótese de apertar mais de um botão simultâneo não há movimento. 
+Um novo movimento só pode ser acionado quando o corrente for concluído, ou seja, 
+ao chegar no destino, parar e abrir a garra.
+
+# ATIVIDADE: modelar o problema (GRAFCET/DTE) para automatizar este robô móvel (tipo
+carro)
+
+*/
