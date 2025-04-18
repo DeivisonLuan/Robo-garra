@@ -63,17 +63,25 @@ void setup() {
 }
 
 void loop() {
-  if(ToP1){
+  if(ToP1 && !ToP2 && !ToP3){
     Go_to_P1(lastPosition);
+    ToP2 = false;
+    ToP3 = false;
   }
-  else if(ToP2){
+  else if(!ToP1 && ToP2 && !ToP3){
     Go_to_P2(lastPosition);
+    ToP1 = false;
+    ToP3 = false;
   }
-  else if(ToP3){
+  else if(!ToP1 && !ToP2 && ToP3){
     Go_to_P3(lastPosition);
+    ToP1 = false;
+    ToP2 = false;
   }
   else{
-
+    ToP1 = false;
+    ToP2 = false;
+    ToP3 = false;
   }
   Serial.println(lastPosition);
   delay(2000);
