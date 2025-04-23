@@ -271,11 +271,6 @@ void Go_to_P3(byte lastPosit){
 
 #Separar as funções em .h
 
-# Em hipótese de apertar mais de um botão simultâneo não há movimento. 
-Um novo movimento só pode ser acionado quando o corrente for concluído, ou seja, 
-ao chegar no destino, parar e abrir a garra.
-
-# ATIVIDADE: modelar o problema (GRAFCET/DTE) para automatizar este robô móvel (tipo
-carro)
+# Não fazer nada se mandar ir pra posição que já está.
 
 */
