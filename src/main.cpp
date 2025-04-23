@@ -175,7 +175,7 @@ void Go_to_P1(byte lastPosit){
   //movimento do carro
   digitalWrite(LedB,HIGH);
   lastPosit = 1;
-  for(byte i=lastPosition;i>=lastPosit;i--){
+  for(byte i=(lastPosition-1);i>=lastPosit;i--){
     LCD.clear();
     headline();
     Draw_Robot(i,false);
@@ -187,7 +187,7 @@ void Go_to_P1(byte lastPosit){
   //abertura da garra
   digitalWrite(LedR,HIGH);
   Draw_Robot(lastPosit,true);
-  delay(100);
+  delay(300);
   digitalWrite(LedR,LOW);
   digitalWrite(LedG,HIGH);
   lastPosition = lastPosit;
@@ -207,7 +207,7 @@ void Go_to_P2(byte lastPosit){
   digitalWrite(LedB,HIGH);
   lastPosit = 8;
   if(lastPosition>lastPosit){
-    for(byte i=lastPosition;i>=lastPosit;i--){
+    for(byte i=(lastPosition-1);i>=lastPosit;i--){
     LCD.clear();
     headline();
     Draw_Robot(i,false);
@@ -215,7 +215,7 @@ void Go_to_P2(byte lastPosit){
     }
   }
   else if(lastPosition<lastPosit){
-    for(byte i=lastPosition;i<=lastPosit;i++){
+    for(byte i=(lastPosition+1);i<=lastPosit;i++){
     LCD.clear();
     headline();
     Draw_Robot(i,false);
@@ -228,7 +228,7 @@ void Go_to_P2(byte lastPosit){
   //abertura da garra
   digitalWrite(LedR,HIGH);
   Draw_Robot(lastPosit,true);
-  delay(100);
+  delay(300);
   digitalWrite(LedR,LOW);
   digitalWrite(LedG,HIGH);
   lastPosition = lastPosit;
@@ -247,7 +247,7 @@ void Go_to_P3(byte lastPosit){
   //movimento do carro
   digitalWrite(LedB,HIGH);
   lastPosit = 15;
-  for(byte i=lastPosition;i<=lastPosit;i++){
+  for(byte i=(lastPosition+1);i<=lastPosit;i++){
     LCD.clear();
     headline();
     Draw_Robot(i,false);
@@ -259,7 +259,7 @@ void Go_to_P3(byte lastPosit){
   //abertura da garra
   digitalWrite(LedR,HIGH);
   Draw_Robot(lastPosit,true);
-  delay(100);
+  delay(300);
   digitalWrite(LedR,LOW);
   digitalWrite(LedG,HIGH);
   lastPosition = lastPosit;
@@ -269,7 +269,7 @@ void Go_to_P3(byte lastPosit){
 
 /*
 
-#Separar as funções em .h
+#Separar as funções em .h ou descrever com // as funções e trechos do codigo
 
 # Não fazer nada se mandar ir pra posição que já está.
 
