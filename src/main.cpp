@@ -289,6 +289,4 @@ void Go_to_P3(byte lastPosit){
 
 #Separar as funções em .h ou descrever com // as funções e trechos do codigo
 
-# Não fazer nada se mandar ir pra posição que já está.
-
 */
