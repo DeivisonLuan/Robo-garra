@@ -164,106 +164,124 @@ void initial_screen(){
 }
 
 void Go_to_P1(byte lastPosit){
-  digitalWrite(LedG,LOW); //indica que recebeu o comando
-
-  //fechamento da garra
-  digitalWrite(LedR,HIGH);
-  Draw_Robot(lastPosit,false);
-  delay(500);
-  digitalWrite(LedR,LOW);
-
-  //movimento do carro
-  digitalWrite(LedB,HIGH);
-  lastPosit = 1;
-  for(byte i=(lastPosition-1);i>=lastPosit;i--){
-    LCD.clear();
-    headline();
-    Draw_Robot(i,false);
-    delay(300);
+  if(lastPosit==1){
+    lastPosition = lastPosit;
+    ToP1 = false;
   }
-  delay(500);
-  digitalWrite(LedB,LOW);
+  else{  
+    digitalWrite(LedG,LOW); //indica que recebeu o comando
 
-  //abertura da garra
-  digitalWrite(LedR,HIGH);
-  Draw_Robot(lastPosit,true);
-  delay(300);
-  digitalWrite(LedR,LOW);
-  digitalWrite(LedG,HIGH);
-  lastPosition = lastPosit;
-  ToP1 = false;
+    //fechamento da garra
+    digitalWrite(LedR,HIGH);
+    Draw_Robot(lastPosit,false);
+    delay(500);
+    digitalWrite(LedR,LOW);
+
+    //movimento do carro
+    digitalWrite(LedB,HIGH);
+    lastPosit = 1;
+    for(byte i=(lastPosition-1);i>=lastPosit;i--){
+      LCD.clear();
+      headline();
+      Draw_Robot(i,false);
+      delay(300);
+    }
+    delay(500);
+    digitalWrite(LedB,LOW);
+
+    //abertura da garra
+    digitalWrite(LedR,HIGH);
+    Draw_Robot(lastPosit,true);
+    delay(300);
+    digitalWrite(LedR,LOW);
+    digitalWrite(LedG,HIGH);
+    lastPosition = lastPosit;
+    ToP1 = false;
+  }
 }
 
 void Go_to_P2(byte lastPosit){
-  digitalWrite(LedG,LOW); //indica que recebeu o comando
-
-  //fechamento da garra
-  digitalWrite(LedR,HIGH);
-  Draw_Robot(lastPosit,false);
-  delay(500);
-  digitalWrite(LedR,LOW);
-
-  //movimento do carro
-  digitalWrite(LedB,HIGH);
-  lastPosit = 8;
-  if(lastPosition>lastPosit){
-    for(byte i=(lastPosition-1);i>=lastPosit;i--){
-    LCD.clear();
-    headline();
-    Draw_Robot(i,false);
-    delay(300);
-    }
+  if(lastPosit==8){
+    lastPosition = lastPosit;
+    ToP2 = false;
   }
-  else if(lastPosition<lastPosit){
-    for(byte i=(lastPosition+1);i<=lastPosit;i++){
-    LCD.clear();
-    headline();
-    Draw_Robot(i,false);
-    delay(300);
-    }
-  }
-  delay(500);
-  digitalWrite(LedB,LOW);
+  else{
+    digitalWrite(LedG,LOW); //indica que recebeu o comando
 
-  //abertura da garra
-  digitalWrite(LedR,HIGH);
-  Draw_Robot(lastPosit,true);
-  delay(300);
-  digitalWrite(LedR,LOW);
-  digitalWrite(LedG,HIGH);
-  lastPosition = lastPosit;
-  ToP2 = false;
+    //fechamento da garra
+    digitalWrite(LedR,HIGH);
+    Draw_Robot(lastPosit,false);
+    delay(500);
+    digitalWrite(LedR,LOW);
+
+    //movimento do carro
+    digitalWrite(LedB,HIGH);
+    lastPosit = 8;
+    if(lastPosition>lastPosit){
+      for(byte i=(lastPosition-1);i>=lastPosit;i--){
+      LCD.clear();
+      headline();
+      Draw_Robot(i,false);
+      delay(300);
+      }
+    }
+    else if(lastPosition<lastPosit){
+      for(byte i=(lastPosition+1);i<=lastPosit;i++){
+      LCD.clear();
+      headline();
+      Draw_Robot(i,false);
+      delay(300);
+      }
+    }
+    delay(500);
+    digitalWrite(LedB,LOW);
+
+    //abertura da garra
+    digitalWrite(LedR,HIGH);
+    Draw_Robot(lastPosit,true);
+    delay(300);
+    digitalWrite(LedR,LOW);
+    digitalWrite(LedG,HIGH);
+    lastPosition = lastPosit;
+    ToP2 = false;
+  }
 }
 
 void Go_to_P3(byte lastPosit){ 
-  digitalWrite(LedG,LOW); //indica que recebeu o comando
-
-  //fechamento da garra
-  digitalWrite(LedR,HIGH);
-  Draw_Robot(lastPosit,false);
-  delay(500);
-  digitalWrite(LedR,LOW);
-
-  //movimento do carro
-  digitalWrite(LedB,HIGH);
-  lastPosit = 15;
-  for(byte i=(lastPosition+1);i<=lastPosit;i++){
-    LCD.clear();
-    headline();
-    Draw_Robot(i,false);
-    delay(300);
+  if(lastPosit==15){
+    lastPosition = lastPosit;
+    ToP3 = false;
   }
-  delay(500);
-  digitalWrite(LedB,LOW);
+  else{
+    digitalWrite(LedG,LOW); //indica que recebeu o comando
 
-  //abertura da garra
-  digitalWrite(LedR,HIGH);
-  Draw_Robot(lastPosit,true);
-  delay(300);
-  digitalWrite(LedR,LOW);
-  digitalWrite(LedG,HIGH);
-  lastPosition = lastPosit;
-  ToP3 = false;
+    //fechamento da garra
+    digitalWrite(LedR,HIGH);
+    Draw_Robot(lastPosit,false);
+    delay(500);
+    digitalWrite(LedR,LOW);
+
+    //movimento do carro
+    digitalWrite(LedB,HIGH);
+    lastPosit = 15;
+    for(byte i=(lastPosition+1);i<=lastPosit;i++){
+      LCD.clear();
+      headline();
+      Draw_Robot(i,false);
+      delay(300);
+    }
+    delay(500);
+    digitalWrite(LedB,LOW);
+
+    //abertura da garra
+    digitalWrite(LedR,HIGH);
+    Draw_Robot(lastPosit,true);
+    delay(300);
+    digitalWrite(LedR,LOW);
+    digitalWrite(LedG,HIGH);
+    lastPosition = lastPosit;
+    ToP3 = false;
+  }
 }
 
 
