@@ -43,12 +43,12 @@ O sistema é uma simulação, onde tanto o movimento quanto a ação da garra s�
 - 🛑 Abertura da garra somente após o "movimento" completo.
 
 ## 📷 Imagem
-Esquema do sistema simulado
+Esquema do sistema simulado:
 > ![image](https://github.com/user-attachments/assets/4d696df8-88e0-4eca-986c-2cbe826d1b35)
 
-Diagrama de transição de estados
-> ![dte](https://github.com/user-attachments/assets/d26bc163-afc8-4a4f-b880-990caf98e373)
+Diagrama de transição de estados:
 
+![alt text](dte.png)
 
 
 ## 📚 Aprendizados
