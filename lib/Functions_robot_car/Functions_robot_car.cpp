@@ -64,6 +64,7 @@ void start_screen(){
     //desenha o carro na posição inicial
     lastPosition = InitialPosition;
     Draw_Robot(lastPosition, true);
+    digitalWrite(LedG,HIGH);
   }
   
   void Go_to_P1(byte lastPosit){
@@ -99,6 +100,8 @@ void start_screen(){
       digitalWrite(LedR,LOW);
       lastPosition = lastPosit;
       ToP1 = false;
+      ToP2 = false;
+      ToP3 = false;
       digitalWrite(LedG,HIGH);
     }
   }
@@ -145,7 +148,9 @@ void start_screen(){
       delay(300);
       digitalWrite(LedR,LOW);
       lastPosition = lastPosit;
+      ToP1 = false;
       ToP2 = false;
+      ToP3 = false;
       digitalWrite(LedG,HIGH);
     }
   }
@@ -182,6 +187,8 @@ void start_screen(){
       delay(300);
       digitalWrite(LedR,LOW);
       lastPosition = lastPosit;
+      ToP1 = false;
+      ToP2 = false;
       ToP3 = false;
       digitalWrite(LedG,HIGH);
     }

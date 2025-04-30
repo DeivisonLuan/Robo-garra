@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "Functions_robot_car.h"
 
+//Declaração de variaveis usadas nas interrupções
 volatile unsigned long timestamp_last_interrupt_p1 = 0;
 volatile unsigned long timestamp_last_interrupt_p2 = 0;
 volatile unsigned long timestamp_last_interrupt_p3 = 0;
@@ -9,6 +10,7 @@ volatile bool ToP1 = false;
 volatile bool ToP2 = false;
 volatile bool ToP3 = false;
 
+//Assinaturas das funções de interrupção
 void IRAM_ATTR button_p1();
 void IRAM_ATTR button_p2();
 void IRAM_ATTR button_p3();
@@ -31,38 +33,34 @@ void setup() {
   
   randomSeed(analogRead(26));
 
-  Serial.begin(115200);
+  Serial.begin(115200); //Abre o serial para depuração
 
+  //Inicia a tela e desenha o carro-robô em uma posição aleatória
   start_screen();
   initial_screen();
-  digitalWrite(LedG,HIGH);
 }
 
+//O loop procura por flag levantadas e chama a função de movimento apenas se um unico botão for apertado por vez
 void loop() {
   if(ToP1 && !ToP2 && !ToP3){
     Go_to_P1(lastPosition);
-    ToP2 = false;
-    ToP3 = false;
   }
   else if(!ToP1 && ToP2 && !ToP3){
     Go_to_P2(lastPosition);
-    ToP1 = false;
-    ToP3 = false;
   }
   else if(!ToP1 && !ToP2 && ToP3){
     Go_to_P3(lastPosition);
-    ToP1 = false;
-    ToP2 = false;
   }
   else{
     ToP1 = false;
     ToP2 = false;
     ToP3 = false;
   }
-  Serial.println(lastPosition);
-  delay(2000);
+  Serial.println(lastPosition); //apenas para depuração
+  delay(800);
 }
 
+//Funções de interrupção
 void IRAM_ATTR button_p1(){
   if (micros() - timestamp_last_interrupt_p1 > DebounceTime) {
     ToP1 = true;
