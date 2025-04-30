@@ -44,12 +44,13 @@ O sistema é uma simulação, onde tanto o movimento quanto a ação da garra s�
 
 ## 📷 Imagem
 Esquema do sistema simulado:
-> ![image](https://github.com/user-attachments/assets/4d696df8-88e0-4eca-986c-2cbe826d1b35)
+> ![Esquema do sistema simulado](https://github.com/user-attachments/assets/4d696df8-88e0-4eca-986c-2cbe826d1b35)
 
 Diagrama de transição de estados:
+> ![Diagrama de transição de estados](dte.png)
 
-![alt text](dte.png)
-
+Esquemático do circuito de simulação:
+> ![Esquemático do circuito de simulação](Schematic.png)
 
 ## 📚 Aprendizados
 
